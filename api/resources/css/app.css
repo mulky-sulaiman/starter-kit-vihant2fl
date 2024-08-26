@@ -1,0 +1,223 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+[x-cloak] {
+    display: none;
+}
+
+@layer base {
+    html {
+        @apply scroll-smooth focus:scroll-auto;
+    }
+}
+
+@layer components {
+    .required {
+        @apply after:content-['*'] after:text-danger-500 after:font-semibold after:ps-2;
+    }
+    .label {
+        @apply block mb-2 text-sm font-medium text-gray-900 dark:text-white;
+    }
+    .label-is-invalid {
+        @apply text-danger-600 dark:text-danger-500;
+    }
+    .label-is-valid {
+        @apply text-success-600 dark:text-success-500;
+    }
+    .label-is-dirty {
+        @apply text-warning-600 dark:text-warning-500;
+    }
+    .input {
+        @apply bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 disabled:cursor-not-allowed read-only:cursor-not-allowed;
+    }
+    .is-invalid {
+        @apply bg-danger-50 border-danger-500 text-danger-900 placeholder-danger-700 focus:!ring-danger-500 dark:bg-danger-100 focus:!border-danger-500 dark:text-danger-500 dark:placeholder-danger-500 dark:border-danger-500;
+    }
+    .is-valid {
+        @apply bg-success-50 border-success-500 text-success-900 placeholder-success-700 focus:!ring-success-500 dark:bg-success-100 focus:!border-success-500 dark:text-success-500 dark:placeholder-success-500 dark:border-success-500;
+    }
+    .is-dirty {
+        @apply bg-warning-50 border-warning-500 text-warning-900 placeholder-warning-700 focus:!ring-warning-500 dark:bg-warning-100 focus:!border-warning-500 dark:text-warning-500 dark:placeholder-warning-500 dark:border-warning-500;
+    }
+    .select {
+        @apply bg-gray-50 border border-gray-300 text-gray-900  text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 disabled:cursor-not-allowed;
+    }
+    .select-is-invalid {
+        @apply bg-danger-50 border border-danger-300 text-danger-900  text-sm rounded-lg focus:ring-danger-500 focus:border-danger-500 block w-full p-2.5 dark:bg-danger-100 dark:border-danger-600 dark:placeholder-danger-400 dark:text-danger-500 dark:focus:ring-danger-500 dark:focus:border-danger-500;
+    }
+    .select-is-valid {
+        @apply bg-success-50 border border-success-300 text-success-900  text-sm rounded-lg focus:ring-success-500 focus:border-success-500 block w-full p-2.5 dark:bg-success-100 dark:border-success-600 dark:placeholder-success-400 dark:text-success-500 dark:focus:ring-success-500 dark:focus:border-success-500;
+    }
+    .select-is-dirty {
+        @apply bg-warning-50 border border-warning-300 text-warning-900  text-sm rounded-lg focus:ring-warning-500 focus:border-warning-500 block w-full p-2.5 dark:bg-warning-100 dark:border-warning-600 dark:placeholder-warning-400 dark:text-warning-500 dark:focus:ring-warning-500 dark:focus:border-warning-500;
+    }
+    .checkbox {
+        @apply w-4 h-4 bg-gray-100 border-gray-300 rounded cursor-pointer text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 disabled:cursor-not-allowed;
+    }
+    .checkbox-is-invalid {
+        @apply w-4 h-4 bg-gray-100 border-gray-300 rounded cursor-pointer text-danger-600 focus:ring-danger-500 dark:focus:ring-danger-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600;
+    }
+    .checkbox-is-valid {
+        @apply w-4 h-4 bg-gray-100 border-gray-300 rounded cursor-pointer text-success-600 focus:ring-success-500 dark:focus:ring-success-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600;
+    }
+    .checkbox-is-dirty {
+        @apply w-4 h-4 bg-gray-100 border-gray-300 rounded cursor-pointer !text-warning-600 focus:!ring-warning-500 dark:focus:!ring-warning-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600;
+    }
+    .radio {
+        @apply w-4 h-4 text-primary-600 bg-gray-100 border-gray-300 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-50 disabled:cursor-not-allowed;
+    }
+    .radio-is-invalid {
+        @apply w-4 h-4 text-danger-600 bg-gray-100 border-gray-300 focus:ring-danger-500 dark:focus:ring-danger-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-50;
+    }
+    .radio-is-valid {
+        @apply w-4 h-4 text-success-600 bg-gray-100 border-gray-300 focus:ring-success-500 dark:focus:ring-success-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-50;
+    }
+    .radio-is-dirty {
+        @apply w-4 h-4 text-warning-600 bg-gray-100 border-gray-300 focus:ring-warning-500 dark:focus:ring-warning-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-50;
+    }
+    .textarea {
+        @apply block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 disabled:cursor-not-allowed read-only:cursor-not-allowed;
+    }
+    .textarea-is-invalid {
+        @apply block p-2.5 w-full text-sm text-danger-900 bg-danger-50 rounded-lg border border-danger-300 focus:ring-danger-500 focus:!border-danger-500 dark:bg-danger-700 dark:border-danger-600 dark:placeholder-danger-400 dark:text-danger-50 dark:focus:ring-danger-500 dark:focus:border-danger-500;
+    }
+    .textarea-is-valid {
+        @apply block p-2.5 w-full text-sm text-success-900 bg-success-50 rounded-lg border border-success-300 focus:ring-success-500 focus:!border-success-500 dark:bg-success-700 dark:border-success-600 dark:placeholder-success-400 dark:text-success-50 dark:focus:ring-success-500 dark:focus:border-success-500;
+    }
+    .textarea-is-dirty {
+        @apply block p-2.5 w-full text-sm text-warning-900 bg-warning-50 rounded-lg border border-warning-300 focus:ring-warning-500 focus:!border-warning-500 dark:bg-warning-700 dark:border-warning-600 dark:placeholder-warning-400 dark:text-warning-50 dark:focus:ring-warning-500 dark:focus:border-warning-500;
+    }
+    #second_navbar li.active a {
+        @apply !text-primary-700 dark:!text-primary-500 !font-medium;
+    }
+    /* Sidebar */
+    .sidebar-link {
+        /* @apply flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700; */
+        @apply flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700;
+    }
+    .sidebar-link.button {
+        @apply w-full;
+    }
+    .sidebar-link.sub {
+        @apply pl-11;
+    }
+    .sidebar-link.active {
+        @apply font-bold bg-gray-100 dark:bg-gray-700;
+    }
+    .sidebar-link > .icon {
+        @apply w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400;
+    }
+    .sidebar-link.active.icon {
+        @apply font-semibold;
+    }
+    /* Dropdwon Menu */
+    .dropdown-item {
+        @apply flex items-center justify-start px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white;
+    }
+}
+
+/* Progress Bar */
+.progress {
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+    height: 4px;
+    width: 100%;
+    border-radius: 2px;
+    background-clip: padding-box;
+    overflow: hidden;
+}
+.progress .indeterminate:before {
+    content: "";
+    position: absolute;
+    background-color: inherit;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    will-change: left, right;
+    -webkit-animation: indeterminate 2.1s
+        cubic-bezier(0.65, 0.815, 0.735, 0.395) infinite;
+    animation: indeterminate 2.1s cubic-bezier(0.65, 0.815, 0.735, 0.395)
+        infinite;
+}
+.progress .indeterminate:after {
+    content: "";
+    position: absolute;
+    background-color: inherit;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    will-change: left, right;
+    -webkit-animation: indeterminate-short 2.1s
+        cubic-bezier(0.165, 0.84, 0.44, 1) infinite;
+    animation: indeterminate-short 2.1s cubic-bezier(0.165, 0.84, 0.44, 1)
+        infinite;
+    -webkit-animation-delay: 1.15s;
+    animation-delay: 1.15s;
+}
+.progress {
+    display: none;
+}
+.htmx-request .progress {
+    display: inline;
+}
+.htmx-request.progress {
+    display: inline;
+}
+@-webkit-keyframes indeterminate {
+    0% {
+        left: -35%;
+        right: 100%;
+    }
+    60% {
+        left: 100%;
+        right: -90%;
+    }
+    100% {
+        left: 100%;
+        right: -90%;
+    }
+}
+@keyframes indeterminate {
+    0% {
+        left: -35%;
+        right: 100%;
+    }
+    60% {
+        left: 100%;
+        right: -90%;
+    }
+    100% {
+        left: 100%;
+        right: -90%;
+    }
+}
+@-webkit-keyframes indeterminate-short {
+    0% {
+        left: -200%;
+        right: 100%;
+    }
+    60% {
+        left: 107%;
+        right: -8%;
+    }
+    100% {
+        left: 107%;
+        right: -8%;
+    }
+}
+@keyframes indeterminate-short {
+    0% {
+        left: -200%;
+        right: 100%;
+    }
+    60% {
+        left: 107%;
+        right: -8%;
+    }
+    100% {
+        left: 107%;
+        right: -8%;
+    }
+}
