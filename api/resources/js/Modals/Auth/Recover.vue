@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { ref } from 'vue'
 import UIModalStaticPopUp from '@/Components/UI/Modal/Static/PopUp.vue'
 import UIModalTemplatePopUp from '@/Components/UI/Modal/Template/PopUp.vue'
 import UIModalStaticDrawer from '@/Components/UI/Modal/Static/Drawer.vue'
@@ -9,7 +8,6 @@ import { Icon } from '@iconify/vue'
 import { useModal } from 'momentum-modal'
 import { usePage, router, useForm } from '@inertiajs/vue3'
 import FormInputGroup from '@/Components/Form/Input/Group.vue'
-import FormCheckboxGroup from '@/Components/Form/Checkbox/Group.vue'
 import UILoadingSpinner from '@/Components/UI/Loading/Spinner.vue'
 
 const emit = defineEmits(['close'])
@@ -23,28 +21,24 @@ const props = defineProps({
     },
 })
 
-const showHint = ref(false)
-
 const page = usePage()
 
 const mode = page.props.config['auth.mode']
 
 const form = useForm({
-    password: '',
-    remember: false,
-});
+    email: ''
+})
 
 const submit = () => {
-    form.post(route('password.confirm'), {
+    form.post(route('password.email'), {
         onFinish: () => {
             // form.reset('password')
         },
         onSuccess: () => {
-            close()
-            //emit('close')
+
         }
-    });
-};
+    })
+}
 
 const handleClose = () => {
     emit('close')
@@ -58,19 +52,22 @@ defineOptions({
 })
 </script>
 <template>
-    <UIHead v-bind:title="$t('global.confirm_password')" v-bind:description="$t('global.confirm_password')" />
+    <UIHead v-bind:title="$t('global.forgot_password')" v-bind:description="$t('global.forgot_password')" />
     <UIModalStaticPopUp v-bind:show="show" maxWidth="lg" v-on:close="close" v-if="mode === 'modal'">
         <form class="space-y-4 md:space-y-6" v-on:submit.prevent="submit">
-            <UIModalTemplatePopUp v-bind:title="$t('global.confirm_password')" v-on:close-proxy="handleClose"
+            <UIModalTemplatePopUp v-bind:title="$t('global.forgot_password')" v-on:close-proxy="handleClose"
                 class="!p-0 md:!p-0">
                 <div class="items-center p-4 space-y-4 md:p-6 md:space-y-6">
-                    <!-- Password -->
+                    <p>Forgot your password? No problem. Just let us know your email address and we will email you a
+                        password reset link that will allow you to choose a new one.</p>
                     <div>
-                        <FormInputGroup identifier="password" type="password" label="Password" v-model="form.password"
-                            required autofocus autocomplete="current-password" v-bind:formIsDirty="form.isDirty"
-                            v-bind:error="form.errors.password" v-bind:hint="$t('login.password_hint')">
+                        <!-- Email -->
+                        <FormInputGroup v-bind:label="$t('register.email')" v-bind:hint="$t('register.email_hint')"
+                            identifier="email" type="email" v-bind:placeholder="$t('register.email_placeholder')"
+                            v-model="form.email" v-bind:formIsDirty="form.isDirty" v-bind:error="form.errors.email"
+                            required autocomplete="username">
                             <template #prefix>
-                                <Icon icon="tabler:key"
+                                <Icon icon="tabler:mail"
                                     class="w-5 h-5 text-gray-400 hover:text-gray-500 focus:text-gray-500" />
                             </template>
                         </FormInputGroup>
@@ -88,10 +85,10 @@ defineOptions({
                 <template #footer>
                     <span class="w-full">
                         <UIButton as="button" type="primary" rounded="lg" v-bind:submit="true" class="w-full"
-                            v-bind:disabled="form.processing">
-                            <Icon icon="tabler:lock-open" class="mr-2 size-5" v-show="!form.processing" />
+                            :disabled="form.processing">
+                            <Icon icon="tabler:mail" class="mr-2 size-5" v-show="!form.processing" />
                             <UILoadingSpinner class="mr-2" size="sm" v-show="form.processing" />
-                            <span class="truncate">{{ $t('login.login') }}</span>
+                            <span class="truncate">{{ $t('global.send_forgot_password_link') }}</span>
                         </UIButton>
                     </span>
                 </template>
@@ -104,13 +101,16 @@ defineOptions({
             <UIModalTemplateDrawer v-bind:title="$t('global.confirm.password')" v-on:close-proxy="handleClose"
                 placement="right" class="!p-0 md:!p-0">
                 <div class="items-center p-4 space-y-4 md:p-6 md:space-y-6">
-                    <!-- Password -->
+                    <p>Forgot your password? No problem. Just let us know your email address and we will email you a
+                        password reset link that will allow you to choose a new one.</p>
                     <div>
-                        <FormInputGroup identifier="password" type="password" label="Password" v-model="form.password"
-                            required autofocus autocomplete="current-password" v-bind:formIsDirty="form.isDirty"
-                            v-bind:error="form.errors.password" v-bind:hint="$t('login.password_hint')">
+                        <!-- Email -->
+                        <FormInputGroup v-bind:label="$t('register.email')" v-bind:hint="$t('register.email_hint')"
+                            identifier="email" type="email" v-bind:placeholder="$t('register.email_placeholder')"
+                            v-model="form.email" v-bind:formIsDirty="form.isDirty" v-bind:error="form.errors.email"
+                            required autocomplete="username">
                             <template #prefix>
-                                <Icon icon="tabler:key"
+                                <Icon icon="tabler:mail"
                                     class="w-5 h-5 text-gray-400 hover:text-gray-500 focus:text-gray-500" />
                             </template>
                         </FormInputGroup>
@@ -128,10 +128,10 @@ defineOptions({
                 <template #footer>
                     <span class="w-full">
                         <UIButton as="button" type="primary" rounded="lg" v-bind:submit="true" class="w-full"
-                            v-bind:disabled="form.processing">
-                            <Icon icon="tabler:login-2" class="mr-2 size-5" v-show="!form.processing" />
+                            :disabled="form.processing">
+                            <Icon icon="tabler:mail" class="mr-2 size-5" v-show="!form.processing" />
                             <UILoadingSpinner class="mr-2" size="sm" v-show="form.processing" />
-                            <span class="truncate">{{ $t('global.confirm') }}</span>
+                            <span class="truncate">{{ $t('global.send_forgot_password_link') }}</span>
                         </UIButton>
                     </span>
                 </template>
