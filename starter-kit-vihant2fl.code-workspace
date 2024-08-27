@@ -1,0 +1,10 @@
+{
+	"folders": [
+		{
+			"path": "client/nuxt"
+		},
+		{
+			"path": "api"
+		}
+	]
+}
