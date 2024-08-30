@@ -130,10 +130,10 @@ return [
 
     'notification' => [
         'pipe' => env('APP_NOTIFICATION_PIPE', 'toast'),
-        'type' => 'default',
+        'type' => 'boxed',
         'variant' => 'info',
         'placement' => 'top',
-        'size' => null,
+        'size' => 'md',
         //'message' => null,
         'autodismiss' => true,
     ],

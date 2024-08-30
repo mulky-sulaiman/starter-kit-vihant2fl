@@ -1,8 +1,10 @@
 <script lang="ts" setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, useAttrs } from 'vue'
 import { randomID } from '@/utils/helpers';
 
 const generatedID = randomID(15)
+
+const attrs = useAttrs()
 
 const props = defineProps({
     id: {
@@ -73,45 +75,53 @@ const roundedClass = computed(() => {
 
 const borderClass = computed(() => {
     if (props.overlap) {
-        return {
-            true: 'bg-gray-50 dark:bg-gray-800 p-1 ring-2 ring-gray-50 dark:ring-gray-800',
-            false: '',
-        }[props.border]
+        return (props.border) ? 'bg-gray-50 dark:bg-gray-800 p-4 ring-8 ring-gray-50 dark:ring-gray-800' : ''
+        // return props.border ? 'border-8 border-gray-50 dark:border-gray-800' : ''
     }
-
-    return {
-        true: 'p-1 ring-2 ring-gray-300 dark:ring-gray-500',
-        false: '',
-    }[props.border]
-
+    return props.border ? 'p-4 ring-8 ring-gray-300 dark:ring-gray-500' : ''
 })
 
 const colorClass = computed(() => {
     if (props.indicator) {
         return 'bg-' + props.color + '-500 dark:bg-' + props.color + '-600'
     }
-    return null
+    return ''
 })
 
 const placementClass = computed(() => {
     if (props.indicator) {
         if (props.rounded === 'full') {
             return {
-                top: 'top-0 left-7',
-                bottom: 'bottom-0 left-7',
+                top: {
+                    xs: '-top-1 right-0',
+                    sm: '-top-1 right-0',
+                    md: '-top-1 right-0',
+                    lg: 'top-2 right-0.5',
+                    xl: 'top-2.5 right-4',
+                }[props.size],
+                bottom: {
+                    xs: '-bottom-1 right-0',
+                    sm: '-bottom-1 right-0',
+                    md: '-bottom-1 right-0',
+                    lg: 'bottom-2 right-0.5',
+                    xl: 'bottom-2.5 right-4',
+                }[props.size],
             }[props.placement]
         } else {
             return {
-                top: 'top-0 left-8',
-                bottom: 'bottom-0 left-8',
+                top: '-top-1 right-0',
+                bottom: '-bottom-1 right-0',
             }[props.placement]
         }
     }
-    return null
+    return ''
 })
+
+const src = ref(null)
 
 onMounted(() => {
     avatarID.value = (props.id) ? props.id : 'avatar-' + generatedID
+    src.value = (attrs.src != undefined) ? attrs.src : 'https://picsum.photos/1280/720'
 })
 
 defineOptions({
@@ -119,9 +129,13 @@ defineOptions({
 })
 </script>
 <template>
-    <div class="relative">
-        <img v-bind:id="avatarID" v-bind:class="[sizeClass, roundedClass, borderClass]" v-bind:alt="alt"
-            v-bind:data-tooltip-target="`${avatarID}-tooltip`" v-bind="$attrs">
+    <div class="relative inline-block">
+        <span class="flex items-center justify-center bg-center bg-no-repeat bg-cover"
+            v-bind:style="`background-image: url('${src}');`" v-bind:id="avatarID"
+            v-bind:class="[sizeClass, roundedClass, borderClass]" v-bind:alt="alt"
+            v-bind:data-tooltip-target="`${avatarID}-tooltip`" v-bind="$attrs"></span>
+        <!-- <img v-bind:id="avatarID" v-bind:class="[sizeClass, roundedClass, borderClass]" v-bind:alt="alt"
+            v-bind:data-tooltip-target="`${avatarID}-tooltip`" v-bind="$attrs"> -->
         <span class="absolute w-3.5 h-3.5 border-2 border-white dark:border-gray-800 rounded-full"
             v-bind:class="[colorClass, placementClass]" v-if="indicator"></span>
         <div v-bind:id="`${avatarID}-tooltip`" role="tooltip"

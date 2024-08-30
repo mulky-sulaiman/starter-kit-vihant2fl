@@ -15,15 +15,20 @@ const props = defineProps({
     menuClass: {
         type: String,
         default: null
+    },
+    itemClicked: {
+        type: Boolean,
+        default: false,
     }
 
 })
+
 defineOptions({
     inheritAttrs: false
 })
 </script>
 <template>
-    <UIMenuDropdownTrigger v-bind:id="id" v-bind:useArrow="useArrow" v-bind="$attrs">
+    <UIMenuDropdownTrigger v-bind:id="id" v-bind:useArrow="useArrow" v-bind:itemClicked="itemClicked" v-bind="$attrs">
         <slot name="trigger" />
     </UIMenuDropdownTrigger>
     <UIMenuDropdownMenu v-bind:id="id" v-bind:class="menuClass">

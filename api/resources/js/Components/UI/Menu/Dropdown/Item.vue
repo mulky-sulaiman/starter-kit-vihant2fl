@@ -9,6 +9,7 @@ const props = defineProps({
         default: true
     }
 })
+const emits = defineEmits(['item-click'])
 defineOptions({
     inheritAttrs: false
 })
@@ -17,12 +18,12 @@ defineOptions({
 <template>
 
     <template v-if="as === 'a'">
-        <a v-bind:class="{ 'link': useLinkClass }" v-bind="$attrs">
+        <a v-bind:class="{ 'link': useLinkClass }" v-bind="$attrs" v-on:click="$emit('item-click', true)">
             <slot />
         </a>
     </template>
     <template v-else-if="as === 'link'">
-        <Link v-bind:class="{ 'link': useLinkClass }" v-bind="$attrs">
+        <Link v-bind:class="{ 'link': useLinkClass }" v-bind="$attrs" v-on:click="$emit('item-click', true)">
         <slot />
         </Link>
     </template>

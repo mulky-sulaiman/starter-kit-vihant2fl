@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { randomID } from '@/utils/helpers'
+import { ref, watchEffect } from 'vue'
 
 const props = defineProps({
     id: {
@@ -9,16 +10,29 @@ const props = defineProps({
     useArrow: {
         type: Boolean,
         default: true,
+    },
+    itemClicked: {
+        type: Boolean,
+        default: false,
     }
 
 })
+
+const trigger = ref(null)
+
+watchEffect(() => {
+    if (props.itemClicked) {
+        trigger.value.click()
+    }
+})
+
 defineOptions({
     inheritAttrs: false
 })
 </script>
 <template>
     <!-- Dropdown Trigger -->
-    <button v-bind:id="id + '-trigger'" v-bind:data-dropdown-toggle="id"
+    <button ref="trigger" v-bind:id="id + '-trigger'" v-bind:data-dropdown-toggle="id"
         class="flex items-center text-sm font-medium text-gray-900 rounded-full pe-1 hover:text-primary-600 dark:hover:text-primary-500 md:me-0 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:text-white"
         type="button" v-bind="$attrs">
         <span class="sr-only" v-text="$t('global.open')"></span>

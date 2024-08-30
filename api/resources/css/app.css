@@ -32,13 +32,13 @@
         @apply bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 disabled:cursor-not-allowed read-only:cursor-not-allowed;
     }
     .is-invalid {
-        @apply bg-danger-50 border-danger-500 text-danger-900 placeholder-danger-700 focus:!ring-danger-500 dark:bg-danger-100 focus:!border-danger-500 dark:text-danger-500 dark:placeholder-danger-500 dark:border-danger-500;
+        @apply bg-danger-50 border-danger-500 text-danger-900 placeholder-danger-700 focus:ring-danger-500 dark:bg-danger-100 focus:border-danger-500 dark:text-danger-500 dark:placeholder-danger-500 dark:border-danger-500 !important;
     }
     .is-valid {
-        @apply bg-success-50 border-success-500 text-success-900 placeholder-success-700 focus:!ring-success-500 dark:bg-success-100 focus:!border-success-500 dark:text-success-500 dark:placeholder-success-500 dark:border-success-500;
+        @apply bg-success-50 border-success-500 text-success-900 placeholder-success-700 focus:ring-success-500 dark:bg-success-100 focus:border-success-500 dark:text-success-500 dark:placeholder-success-500 dark:border-success-500 !important;
     }
     .is-dirty {
-        @apply bg-warning-50 border-warning-500 text-warning-900 placeholder-warning-700 focus:!ring-warning-500 dark:bg-warning-100 focus:!border-warning-500 dark:text-warning-500 dark:placeholder-warning-500 dark:border-warning-500;
+        @apply bg-warning-50 border-warning-500 text-warning-900 placeholder-warning-700 focus:ring-warning-500 dark:bg-warning-100 focus:border-warning-500 dark:text-warning-500 dark:placeholder-warning-500 dark:border-warning-500 !important;
     }
     .select {
         @apply bg-gray-50 border border-gray-300 text-gray-900  text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 disabled:cursor-not-allowed;
@@ -62,7 +62,7 @@
         @apply w-4 h-4 bg-gray-100 border-gray-300 rounded cursor-pointer text-success-600 focus:ring-success-500 dark:focus:ring-success-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600;
     }
     .checkbox-is-dirty {
-        @apply w-4 h-4 bg-gray-100 border-gray-300 rounded cursor-pointer !text-warning-600 focus:!ring-warning-500 dark:focus:!ring-warning-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600;
+        @apply w-4 h-4 bg-gray-100 border-gray-300 rounded cursor-pointer text-warning-600 focus:ring-warning-500 dark:focus:ring-warning-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 !important;
     }
     .radio {
         @apply w-4 h-4 text-primary-600 bg-gray-100 border-gray-300 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-50 disabled:cursor-not-allowed;
@@ -80,16 +80,16 @@
         @apply block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 disabled:cursor-not-allowed read-only:cursor-not-allowed;
     }
     .textarea-is-invalid {
-        @apply block p-2.5 w-full text-sm text-danger-900 bg-danger-50 rounded-lg border border-danger-300 focus:ring-danger-500 focus:!border-danger-500 dark:bg-danger-700 dark:border-danger-600 dark:placeholder-danger-400 dark:text-danger-50 dark:focus:ring-danger-500 dark:focus:border-danger-500;
+        @apply block p-2.5 w-full text-sm text-danger-900 bg-danger-50 rounded-lg border border-danger-300 focus:ring-danger-500 focus:border-danger-500 dark:bg-danger-700 dark:border-danger-600 dark:placeholder-danger-400 dark:text-danger-50 dark:focus:ring-danger-500 dark:focus:border-danger-500 !important;
     }
     .textarea-is-valid {
-        @apply block p-2.5 w-full text-sm text-success-900 bg-success-50 rounded-lg border border-success-300 focus:ring-success-500 focus:!border-success-500 dark:bg-success-700 dark:border-success-600 dark:placeholder-success-400 dark:text-success-50 dark:focus:ring-success-500 dark:focus:border-success-500;
+        @apply block p-2.5 w-full text-sm text-success-900 bg-success-50 rounded-lg border border-success-300 focus:ring-success-500 focus:border-success-500 dark:bg-success-700 dark:border-success-600 dark:placeholder-success-400 dark:text-success-50 dark:focus:ring-success-500 dark:focus:border-success-500 !important;
     }
     .textarea-is-dirty {
-        @apply block p-2.5 w-full text-sm text-warning-900 bg-warning-50 rounded-lg border border-warning-300 focus:ring-warning-500 focus:!border-warning-500 dark:bg-warning-700 dark:border-warning-600 dark:placeholder-warning-400 dark:text-warning-50 dark:focus:ring-warning-500 dark:focus:border-warning-500;
+        @apply block p-2.5 w-full text-sm text-warning-900 bg-warning-50 rounded-lg border border-warning-300 focus:ring-warning-500 focus:border-warning-500 dark:bg-warning-700 dark:border-warning-600 dark:placeholder-warning-400 dark:text-warning-50 dark:focus:ring-warning-500 dark:focus:border-warning-500 !important;
     }
     #second_navbar li.active a {
-        @apply !text-primary-700 dark:!text-primary-500 !font-medium;
+        @apply text-primary-700 dark:text-primary-500 font-medium !important;
     }
     /* Sidebar */
     .sidebar-link {
@@ -220,4 +220,24 @@
         left: 107%;
         right: -8%;
     }
+}
+
+/* clears the 'X' from Internet Explorer */
+input[type="search"]::-ms-clear {
+    display: none;
+    width: 0;
+    height: 0;
+}
+input[type="search"]::-ms-reveal {
+    display: none;
+    width: 0;
+    height: 0;
+}
+
+/* clears the 'X' from Chrome */
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration {
+    display: none;
 }

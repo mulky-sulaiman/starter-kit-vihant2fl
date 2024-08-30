@@ -16,6 +16,8 @@ Route::get('/', HomeController::class)->name('home');
 
 Route::resource('user', UserController::class);
 
+Route::get('/@/{user:username}', [UserController::class, 'show'])->withTrashed(true)->name('profile.show');
+
 // Test pages
 Route::get('/test/form', function () {
     $genders = [
@@ -24,6 +26,22 @@ Route::get('/test/form', function () {
     ];
     return inertia()->render('Test/Form', compact('genders'));
 })->name('test.form');
+
+Route::get('/test/dashboard-grid', function () {
+    return inertia()->render('Test/Dashboard/Grid');
+})->name('test.dashboard-grid');
+
+Route::get('/test/dashboard-flex', function () {
+    return inertia()->render('Test/Dashboard/Flex');
+})->name('test.dashboard-flex');
+
+Route::get('/test/landing-grid', function () {
+    return inertia()->render('Test/Landing/Grid');
+})->name('test.landing-grid');
+
+Route::get('/test/landing-flex', function () {
+    return inertia()->render('Test/Landing/Flex');
+})->name('test.landing-flex');
 
 // Guest Routes
 Route::middleware(['guest'])->group(function () {
@@ -57,6 +75,11 @@ Route::middleware(['auth'])->group(function () {
             if (Features::hasSecurityFeatures()) {
                 Route::get('/security', SecurityController::class)->name('dashboard.account.security');
             }
+        });
+    });
+    Route::middleware(['verified', 'password.confirm'])->group(function () {
+        Route::prefix('/admin')->group(function () {
+            Route::get('/', DashboardIndexController::class)->name('admin');
         });
     });
 });

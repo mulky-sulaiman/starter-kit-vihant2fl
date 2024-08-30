@@ -21,7 +21,7 @@ const submit = () => {
 
 </script>
 <template>
-    <form class="space-y-4 md:space-y-6" v-on:submit.prevent="submit">
+    <form class="w-full space-y-4 md:w-2/3 md:space-y-6" v-on:submit.prevent="submit">
         <h1 class="text-lg font-bold leading-tight tracking-tight text-gray-900 text-start md:text-2xl dark:text-white">
             {{ $t('global.change_password') }}
         </h1>

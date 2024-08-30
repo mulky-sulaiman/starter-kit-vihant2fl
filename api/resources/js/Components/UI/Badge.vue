@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-// import { computed } from 'vue';
-// import { randomID } from '@/Helpers/utils'
+import { computed } from 'vue'
+import { randomID } from '@/utils/helpers'
 
 const props = defineProps({
     name: {

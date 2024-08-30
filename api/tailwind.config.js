@@ -9,15 +9,66 @@ export default {
         './node_modules/flowbite/**/*.{js,jsx,ts,tsx,vue}'
     ],
     safelist: [
+        'truncate',
         {
-            pattern: /(min|max)-(w|h)-(xs|sm|md|lg|xl|2xl|3xl|4xl|5xl|6xl|7xl|full|screen|0|[100vw]|[100vh])/,
+            pattern: /grid-cols-(1|2|3|4|5|6|7|8|9|10|11|12)/,
+            variants: [
+                'md',
+                'lg',
+                'xl',
+                ,],
         },
         {
-            pattern: /bg-(success|info|warning|danger)-(50|100|200|300|400|500|600|700|800|900|950)/,
+            pattern: /(min|max)-(w|h)-(xs|sm|md|lg|xl|2xl|3xl|4xl|5xl|6xl|7xl|full|screen|0|[100vw]|[100vh])/,
+            variants: [
+                'dark',
+                'hover',
+                'focus',
+                'dark:hover',
+                'dark:focus',
+                ,],
+        },
+        {
+            pattern: /bg-(primary|light|success|info|warning|danger)-(50|100|200|300|400|500|600|700|800|900|950)/,
+            variants: [
+                'dark',
+                'hover',
+                'focus',
+                'dark:hover',
+                'dark:focus',
+                ,],
+        },
+        {
+            pattern: /border-(primary|light|success|info|warning|danger)-(50|100|200|300|400|500|600|700|800|900|950)/,
+            variants: [
+                'dark',
+                'hover',
+                'focus',
+                'dark:hover',
+                'dark:focus',
+                ,],
+        },
+        {
+            pattern: /text-(primary|light|success|info|warning|danger)-(50|100|200|300|400|500|600|700|800|900|950)/,
+            variants: [
+                'dark',
+                'hover',
+                'focus',
+                'dark:hover',
+                'dark:focus',
+                ,],
         },
         {
             pattern: /bg-[url('(*)')]/,
+            variants: [
+                'dark',
+                'hover',
+                'focus',
+                'dark:hover',
+                'dark:focus',
+                ,],
         },
+
     ],
     darkMode: 'class',
     theme: {

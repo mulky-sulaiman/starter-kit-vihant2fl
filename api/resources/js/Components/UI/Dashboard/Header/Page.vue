@@ -39,13 +39,13 @@ const totalBreadCrumbs = computed(() => {
                         <Link v-bind:href="route('admin.light')"
                             class="inline-flex items-center text-gray-700 hover:text-primary-600 dark:text-gray-300 dark:hover:text-white"
                             v-if="mode == 'admin'">
-                        <Icon icon="tabler:layout" class="w-5 h-5 mr-2.5" />
+                        <Icon icon="tabler:layout-filled" class="w-5 h-5 mr-2.5" />
                         <span class="truncate">{{ $t('global.admin') }}</span>
                         </Link>
                         <Link v-bind:href="route('dashboard')"
                             class="inline-flex items-center text-gray-700 hover:text-primary-600 dark:text-gray-300 dark:hover:text-white"
                             v-if="mode == 'dashboard'">
-                        <Icon icon="tabler:layout-dashboard" class="w-5 h-5 mr-2.5" />
+                        <Icon icon="tabler:layout-dashboard-filled" class="w-5 h-5 mr-2.5" />
                         <span class="truncate">{{ $t('global.dashboard') }}</span>
                         </Link>
                     </li>
@@ -79,16 +79,16 @@ const totalBreadCrumbs = computed(() => {
             </h1>
 
             <!-- Left Action -->
-            <div class="flex items-center mb-4 sm:mb-0">
-                <template v-if="slots.leftAction">
-                    <slot name="leftAction" />
-                </template>
+            <div class="flex items-center mb-4 sm:mb-0" v-if="slots.leftAction">
+                <!-- <template v-if="slots.leftAction"> -->
+                <slot name="leftAction" />
+                <!-- </template> -->
             </div>
 
 
         </div>
         <!-- Page Action -->
-        <div class="flex items-end justify-start gap-2 mb-4 md:justify-end">
+        <div class="flex items-end justify-start gap-2 mb-4 md:justify-end" v-if="slots.actions">
             <slot name="actions" />
         </div>
     </div>

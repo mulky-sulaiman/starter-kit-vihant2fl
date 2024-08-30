@@ -96,6 +96,18 @@ class FortifyServiceProvider extends ServiceProvider
             \Laravel\Fortify\Contracts\VerifyEmailResponse::class,
             \App\Http\Responses\VerifyEmailResponse::class
         );
+
+        // Two Factor Enabled Response
+        $this->app->singleton(
+            \Laravel\Fortify\Contracts\TwoFactorEnabledResponse::class,
+            \App\Http\Responses\TwoFactorEnabledResponse::class
+        );
+
+        // Two Factor Disabled Response
+        $this->app->singleton(
+            \Laravel\Fortify\Contracts\TwoFactorDisabledResponse::class,
+            \App\Http\Responses\TwoFactorDisabledResponse::class
+        );
     }
 
     /**
@@ -145,7 +157,7 @@ class FortifyServiceProvider extends ServiceProvider
             return Limit::perMinute(5)->by($request->session()->get('login.id'));
         });
 
-        if (config('app.engine', 'inertia') == 'inertia') {
+        if (config('app.engine', 'inertia') === 'inertia') {
             // Login View
             Fortify::loginView(function () {
                 if (config('auth.mode', 'direct') === 'direct') {
@@ -181,10 +193,8 @@ class FortifyServiceProvider extends ServiceProvider
                 return inertia()->modal('Auth/VerifyEmail')
                     ->baseRoute('home');
             });
+        } else {
+            Fortify::viewPrefix('auth.');
         }
-
-        // else {
-        //     Fortify::viewPrefix('auth.');
-        // }
     }
 }

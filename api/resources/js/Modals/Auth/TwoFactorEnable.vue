@@ -63,8 +63,10 @@ defineOptions({
 
 const qrCode = ref('')
 
+const setupKey = ref('')
 
-onMounted(() => {
+
+const showQrCode = () => {
     axios.get(route('two-factor.qr-code')).then((response) => {
         qrCode.value = response.data.svg
     }).catch((e) => {
@@ -72,6 +74,17 @@ onMounted(() => {
             router.get(route('password.confirm'))
         }
     })
+}
+
+const showSetupKey = () => {
+    axios.get(route('two-factor.secret-key')).then(response => {
+        setupKey.value = response.data.secretKey;
+    })
+}
+
+onMounted(() => {
+    showQrCode()
+    showSetupKey()
 })
 
 </script>
@@ -86,6 +99,9 @@ onMounted(() => {
                     <p>Scan the following QR code using your phone's
                         authenticator application to enable two factor authentication.</p>
                     <div v-html="qrCode" class="flex items-center justify-center mx-auto"></div>
+                    <p class="text-sm text-gray-500 dark:text-gray-400">Setup Key: <span class="font-semibold"
+                            v-text="setupKey"></span>
+                    </p>
                     <FormPinGroup identifier="code" label="Code" alignment="center" v-bind:formIsDirty="form.isDirty"
                         v-bind:error="form.errors.confirmTwoFactorAuthentication?.code"
                         hint="Enter the code given from the authenticator app" required v-model="form.code" />
@@ -113,6 +129,9 @@ onMounted(() => {
                     <p>Scan the following QR code using your phone's
                         authenticator application to enable two factor authentication.</p>
                     <div v-html="qrCode" class="flex items-center justify-center mx-auto"></div>
+                    <p class="text-sm text-gray-500 dark:text-gray-400">Setup Key: <span class="font-semibold"
+                            v-text="setupKey"></span>
+                    </p>
                     <FormPinGroup identifier="code" label="Code" alignment="center" v-bind:formIsDirty="form.isDirty"
                         v-bind:error="form.errors.confirmTwoFactorAuthentication?.code"
                         hint="Enter the code given from the authenticator app" required v-model="form.code" />

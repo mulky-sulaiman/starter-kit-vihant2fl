@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { watchEffect } from 'vue'
+import { watchEffect, ref } from 'vue'
 import { usePage, router } from '@inertiajs/vue3'
 import { Icon } from '@iconify/vue'
 import UIMenuDropdown from '@/Components/UI/Menu/Dropdown/Index.vue'
@@ -13,6 +13,8 @@ const props = defineProps({
         default: 'light',
     }
 })
+
+const itemClicked = ref(false)
 
 /** Confirm Dialog Block */
 import { useConfirmStore } from '@/stores/useConfirmStore'
@@ -57,9 +59,9 @@ watchEffect(() => {
             '!bg-primary-700 dark:!bg-primary-600 focus:!ring-primary-700 dark:focus:!ring-primary-600': mode ==
                 'primary',
 
-        }" v-bind:useArrow="false">
+        }" v-bind:useArrow="false" v-bind:itemClicked="itemClicked">
         <template #trigger>
-            <UIAvatar size="md" rounded="full" v-bind:tooltip="false" v-bind:src="$page.props.auth.user.avatar_url"
+            <UIAvatar size="sm" rounded="full" v-bind:tooltip="false" v-bind:src="$page.props.auth.user.avatar_url"
                 v-bind:alt="$page.props.auth.user.name" v-bind:indicator="true" placement="bottom"
                 v-bind:color="$page.props.auth.user.active ? 'success' : 'danger'" />
         </template>
@@ -80,7 +82,8 @@ watchEffect(() => {
             </li>
             <li>
                 <UIMenuDropdownItem as="link" v-bind:useLinkClass="false" v-bind:href="route('dashboard.account.index')"
-                    class="flex items-center px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                    class="flex items-center px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                    v-on:item-click="itemClicked = true">
                     <Icon icon="tabler:user-cog" class="w-5 h-5 mr-2 text-gray-400" />
                     {{ $t('global.profile_information') }}
                 </UIMenuDropdownItem>
@@ -88,7 +91,8 @@ watchEffect(() => {
             <li v-if="$page.props.features['security']">
                 <UIMenuDropdownItem as="link" v-bind:useLinkClass="false"
                     v-bind:href="route('dashboard.account.security')"
-                    class="flex items-center px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                    class="flex items-center px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                    v-on:item-click="itemClicked = true">
                     <Icon icon="tabler:lock-cog" class="w-5 h-5 mr-2 text-gray-400" />
                     {{ $t('global.security') }}
                 </UIMenuDropdownItem>
@@ -100,7 +104,8 @@ watchEffect(() => {
                 <UIMenuDropdownItem as="a" v-bind:useLinkClass="false" href="/logout"
                     data-modal-target="confirm-dialog-modal" data-modal-toggle="confirm-dialog-modal"
                     v-on:click.prevent="setConfirmDialog()"
-                    class="flex items-center px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                    class="flex items-center px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                    v-on:item-click="itemClicked = true">
                     <Icon icon="tabler:logout" class="w-5 h-5 mr-2" />
                     {{ $t('global.logout') }}
                 </UIMenuDropdownItem>

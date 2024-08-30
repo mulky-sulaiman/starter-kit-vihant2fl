@@ -13,11 +13,26 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $this->initPrevious('user.index', 'user.index');
-        $users = UserResource::collection(User::all());
-        return inertia()->render('User/Index', compact('users'));
+
+        $search = $request->query('search', '');
+        $layout = $request->query('layout', 'list');
+
+        if (!empty($search)) {
+            $result = User::withTrashed(true)
+                ->where('name', 'like', "%{$search}%")
+                ->orWhere('username', 'like', "%{$search}%")
+                ->orWhere('email', 'like', "%{$search}%");
+        } else {
+            $result = User::withTrashed(true);
+        }
+
+        $users = $result ? UserResource::collection($result->paginate(8)->withQueryString()) : null;
+
+
+        return inertia()->render('User/Index', compact('users', 'layout', 'search'));
     }
 
     /**
@@ -41,7 +56,8 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        //
+        $this->initPrevious('user.show', 'profile.show', ['user' => $user->username]);
+        return inertia()->render('User/Show', ['user' => UserResource::make($user)]);
     }
 
     /**

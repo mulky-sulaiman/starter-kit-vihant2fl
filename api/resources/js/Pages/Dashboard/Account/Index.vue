@@ -5,11 +5,11 @@ import FormSelectGroup from '@/Components/Form/Select/Group.vue'
 import UIButton from '@/Components/UI/Button.vue'
 import { Icon } from '@iconify/vue'
 import UILoadingSpinner from '@/Components/UI/Loading/Spinner.vue'
-import { useForm, router, usePage } from '@inertiajs/vue3'
+import { useForm, usePage } from '@inertiajs/vue3'
 import UICard from '@/Components/UI/Card/Index.vue'
-import UIAvatar from '@/Components/UI/Avatar/Index.vue'
 import FormLabel from '@/Components/Form/Label.vue'
-import { ref, computed, watch, onMounted } from 'vue'
+import { ref, computed, watch } from 'vue'
+import UICardProfile from '@/Components/UI/Card/Profile/Index.vue'
 
 const verificationLinkSent = ref(null)
 
@@ -82,12 +82,13 @@ watch(photo_header, (photo_header) => {
         <UICard class="border-0 border-b border-gray-200 rounded-none dark:border-gray-700" size="full">
             <form v-on:submit.prevent="submit">
                 <div class="flex flex-col max-w-full px-4 mx-auto space-y-6 lg:gap-8 xl:gap-0">
-                    <div class="flex flex-col items-center justify-center w-full -space-y-20">
-                        <!-- Profile Header -->
-                        <div class="flex items-center justify-center w-full bg-cover"
-                            v-bind:style="`background-image: url('${photoHeaderPreview ?? $page.props.auth.user.header_url}');`">
+
+                    <UICardProfile v-bind:header-src="photoHeaderPreview ?? $page.props.auth.user.header_url"
+                        v-bind:avatar-src="photoPreview ?? $page.props.auth.user.avatar_url"
+                        v-bind:alt="$page.props.auth.user.name">
+                        <template #header>
                             <FormLabel for="dropzone-file"
-                                class="flex flex-col items-center justify-center w-full h-64 font-semibold border-2 border-gray-300 border-dashed rounded-lg cursor-pointer dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600 text-primary-500 dark:text-primary-100">
+                                class="flex flex-col items-center justify-center w-full h-64 font-semibold text-white cursor-pointer hover:text-primary-500 dark:hover:text-primary-100">
                                 <template #label>
                                     <a href="#" v-on:click.prevent="photo_header = null"
                                         class="flex flex-col items-center justify-center pt-5 pb-6" role="button"
@@ -111,14 +112,8 @@ watch(photo_header, (photo_header) => {
                                     </div>
                                 </template>
                             </FormLabel>
-                        </div>
-                        <!-- Avatar -->
-                        <div flex flex-col items-center justify-center w-full space-y-4>
-                            <UIAvatar v-bind:src="photoPreview" v-bind:alt="$page.props.auth.user.name" rounded="full"
-                                size="xl" v-bind:tooltip="true" v-bind:overlap="true" v-if="photoPreview" />
-                            <UIAvatar v-bind:src="$page.props.auth.user.avatar_url"
-                                v-bind:alt="$page.props.auth.user.name" rounded="full" size="xl" v-bind:tooltip="true"
-                                v-bind:border="true" v-bind:overlap="true" v-else />
+                        </template>
+                        <template #avatar>
                             <div>
                                 <FormLabel
                                     class="font-semibold text-center cursor-pointer text-primary-500 dark:text-primary-100">
@@ -132,9 +127,8 @@ watch(photo_header, (photo_header) => {
                                     </template>
                                 </FormLabel>
                             </div>
-                        </div>
-
-                    </div>
+                        </template>
+                    </UICardProfile>
 
                     <div class="space-y-4 md:space-y-6">
                         <div class="grid grid-cols-6 gap-6">
@@ -158,19 +152,6 @@ watch(photo_header, (photo_header) => {
                                     v-bind:placeholder="$t('register.last_name_placeholder')" type="text"
                                     identifier="last_name" v-model="form.last_name" v-bind:formIsDirty="form.isDirty"
                                     v-bind:error="form.errors.last_name" autocomplete="last-name">
-                                    <template #prefix>
-                                        <Icon icon="tabler:user"
-                                            class="w-5 h-5 text-gray-400 hover:text-gray-500 focus:text-gray-500" />
-                                    </template>
-                                </FormInputGroup>
-                            </div>
-                            <div class="col-span-6">
-                                <!-- Username -->
-                                <FormInputGroup v-bind:label="$t('register.username')"
-                                    v-bind:hint="$t('register.username_hint')" identifier="username" type="text"
-                                    v-bind:placeholder="$t('register.username_placeholder')" v-model="form.username"
-                                    v-bind:formIsDirty="form.isDirty" v-bind:error="form.errors.username" required
-                                    autocomplete="username">
                                     <template #prefix>
                                         <Icon icon="tabler:user"
                                             class="w-5 h-5 text-gray-400 hover:text-gray-500 focus:text-gray-500" />
@@ -204,11 +185,7 @@ watch(photo_header, (photo_header) => {
                                     </template>
                                 </FormSelectGroup>
                             </div>
-                        </div>
-                    </div>
-                    <div class="space-y-4 md:space-y-6 ">
-                        <div class="grid grid-cols-6 gap-6">
-                            <div class="col-span-6">
+                            <div class="col-span-6 sm:col-span-3">
                                 <!-- Email -->
                                 <FormInputGroup v-bind:label="$t('register.email')"
                                     v-bind:hint="$t('register.email_hint')" identifier="email" type="email"
@@ -220,23 +197,36 @@ watch(photo_header, (photo_header) => {
                                             class="w-5 h-5 text-gray-400 hover:text-gray-500 focus:text-gray-500" />
                                     </template>
                                 </FormInputGroup>
-                            </div>
-                            <div class="col-span-6"
-                                v-if="$page.props.features['email-verification'] && page.props.auth.user.email_verified_at === null">
-                                <p class="mt-2 text-sm dark:text-white">
-                                    Your email address is unverified.
+                                <div
+                                    v-if="$page.props.features['email-verification'] && page.props.auth.user.email_verified_at === null">
+                                    <p class="mt-2 text-sm dark:text-white">
+                                        Your email address is unverified.
 
-                                    <Link v-bind:href="route('verification.send')" method="post" as="button"
-                                        class="text-sm text-gray-600 underline rounded-md dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
-                                        v-on:click.prevent="sendEmailVerification">
-                                    Click here to re-send the verification email.
-                                    </Link>
-                                </p>
+                                        <Link v-bind:href="route('verification.send')" method="post" as="button"
+                                            class="text-sm text-gray-600 underline rounded-md dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
+                                            v-on:click.prevent="sendEmailVerification">
+                                        Click here to re-send the verification email.
+                                        </Link>
+                                    </p>
 
-                                <div v-show="verificationLinkSent"
-                                    class="mt-2 text-sm font-medium text-green-600 dark:text-green-400">
-                                    A new verification link has been sent to your email address.
+                                    <div v-show="verificationLinkSent"
+                                        class="mt-2 text-sm font-medium text-green-600 dark:text-green-400">
+                                        A new verification link has been sent to your email address.
+                                    </div>
                                 </div>
+                            </div>
+                            <div class="col-span-6 sm:col-span-3">
+                                <!-- Username -->
+                                <FormInputGroup v-bind:label="$t('register.username')"
+                                    v-bind:hint="$t('register.username_hint')" identifier="username" type="text"
+                                    v-bind:placeholder="$t('register.username_placeholder')" v-model="form.username"
+                                    v-bind:formIsDirty="form.isDirty" v-bind:error="form.errors.username" required
+                                    autocomplete="username">
+                                    <template #prefix>
+                                        <Icon icon="tabler:user"
+                                            class="w-5 h-5 text-gray-400 hover:text-gray-500 focus:text-gray-500" />
+                                    </template>
+                                </FormInputGroup>
                             </div>
                         </div>
                     </div>

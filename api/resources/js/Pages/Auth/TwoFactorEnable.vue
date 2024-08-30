@@ -1,11 +1,10 @@
 <script lang="ts" setup>
-import { ref, onMounted, watch } from 'vue'
+import { ref, onMounted } from 'vue'
 import ContainerCenter from '@/Components/ContainerCenter.vue'
 import AuthenticationLogo from '@/Components/Authentication/Logo.vue'
 import AuthenticationCard from '@/Components/Authentication/Card.vue'
 import UIButton from '@/Components/UI/Button.vue'
 import { Icon } from '@iconify/vue'
-import { useModal } from 'momentum-modal'
 import { usePage, router, useForm } from '@inertiajs/vue3'
 import UILoadingSpinner from '@/Components/UI/Loading/Spinner.vue'
 import { useToastStore } from '@/stores/useToastStore'
@@ -15,12 +14,7 @@ import FormPinGroup from '@/Components/Form/Pin/Group.vue'
 
 const toast = useToastStore()
 
-const emit = defineEmits(['close'])
-
 const page = usePage()
-
-const mode = page.props.config['auth.mode']
-
 
 const form = useForm({
     code: ''
@@ -28,43 +22,26 @@ const form = useForm({
 
 
 const submit = () => {
-    // console.log(form.code)
     form.post(route('two-factor.confirm'), {
         onSuccess: () => {
-            toast.add({
-                type: 'info',
-                message: 'Two Factor Authentication has been successfully enabled',
-                autodismiss: true,
-            })
-            router.get(route('dashboard.account.security'), {
-                onSuccess: page => {
-                    toast.add({
-                        type: 'info',
-                        message: 'Two Factor Authentication has been successfully enabled',
-                        autodismiss: true,
-                    })
-                }
-            })
+            Promise.all([
+                router.get(route('dashboard.account.security')),
+                toast.add({
+                    type: 'info',
+                    message: 'Two Factor Authentication has been successfully enabled',
+                    autodismiss: true,
+                })
+            ])
+
         }
     })
 }
 
-
-const handleClose = () => {
-    emit('close')
-    router.get(page.props.previous['url'])
-}
-
-const { show, close, redirect } = useModal()
-
-defineOptions({
-    // layout: false
-})
-
 const qrCode = ref('')
 
+const setupKey = ref('')
 
-onMounted(() => {
+const showQrCode = () => {
     axios.get(route('two-factor.qr-code')).then((response) => {
         qrCode.value = response.data.svg
     }).catch((e) => {
@@ -72,6 +49,17 @@ onMounted(() => {
             router.get(route('password.confirm'))
         }
     })
+}
+
+const showSetupKey = () => {
+    axios.get(route('two-factor.secret-key')).then(response => {
+        setupKey.value = response.data.secretKey;
+    })
+}
+
+onMounted(() => {
+    showQrCode()
+    showSetupKey()
 })
 
 </script>
@@ -90,6 +78,9 @@ onMounted(() => {
                         <p>Scan the following QR code using your phone's
                             authenticator application to enable two factor authentication.</p>
                         <div v-html="qrCode" class="flex items-center justify-center mx-auto"></div>
+                        <p class="text-sm text-gray-500 dark:text-gray-400">Setup Key: <span class="font-semibold"
+                                v-text="setupKey"></span>
+                        </p>
                         <FormPinGroup identifier="code" label="Code" alignment="center"
                             v-bind:formIsDirty="form.isDirty"
                             v-bind:error="form.errors.confirmTwoFactorAuthentication?.code"
